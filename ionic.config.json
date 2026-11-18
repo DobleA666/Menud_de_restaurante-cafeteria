@@ -1,0 +1,7 @@
+{
+  "name": "menu-restaurante",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
