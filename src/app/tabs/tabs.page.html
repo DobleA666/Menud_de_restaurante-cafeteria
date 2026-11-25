@@ -8,6 +8,9 @@
     <ion-tab-button tab="pedido" href="/tabs/pedido">
       <ion-icon aria-hidden="true" name="cart"></ion-icon>
       <ion-label>Pedido</ion-label>
+      @if (pedidoServicio.cantidadTotal() > 0) {
+        <ion-badge color="danger">{{ pedidoServicio.cantidadTotal() }}</ion-badge>
+      }
     </ion-tab-button>
 
     <ion-tab-button tab="sucursales" href="/tabs/sucursales">
