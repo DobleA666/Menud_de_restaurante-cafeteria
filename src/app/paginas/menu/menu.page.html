@@ -47,6 +47,12 @@
           @if (!producto.disponible) {
             <ion-badge color="danger">Agotado</ion-badge>
           }
+          <ion-button
+            size="small"
+            [disabled]="!producto.disponible"
+            (click)="agregarAlPedido(producto)">
+            <ion-icon slot="start" name="add"></ion-icon> Agregar 
+          </ion-button>
         </ion-card-content>
       </ion-card>
     }

@@ -1,9 +1,11 @@
 import { Component, OnInit, computed, signal } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonSegment, IonSegmentButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonSpinner, IonButton, IonBadge, } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { cafe, beer, nutrition, fastFood, pizza, iceCream, alertCircle } from 'ionicons/icons';
+import { cafe, beer, nutrition, fastFood, pizza, iceCream, alertCircle, add } from 'ionicons/icons';
 import { MenuServicio } from '../../servicios/menu.servicio';
+import { PedidoServicio } from '../../servicios/pedido.servicio';
 import { ProductoMenu } from '../../modelos/producto-menu.modelo';
+import { formatearPrecio } from '../../utilidades/formato.util';
 
 @Component({
   selector: 'app-menu',
@@ -21,8 +23,8 @@ export class MenuPage implements OnInit {
     this.productos().filter((producto) => producto.categoria === this.categoriaSeleccionada()),
   );
 
-  constructor(private menuServicio: MenuServicio) {
-    addIcons({ cafe, beer, nutrition, fastFood, pizza, iceCream, alertCircle });
+  constructor(private menuServicio: MenuServicio, private pedidoServicio: PedidoServicio) {
+    addIcons({ cafe, beer, nutrition, fastFood, pizza, iceCream, alertCircle, add });
   }
   ngOnInit(): void {
     this.cargarDatos();
@@ -47,6 +49,9 @@ export class MenuPage implements OnInit {
 
   cambiarCategoria(evento: CustomEvent): void {
     this.categoriaSeleccionada.set(String(evento.detail.value));
+  }
+  agregarAlPedido(producto: ProductoMenu): void {
+    this.pedidoServicio.agregarProducto(producto);
   }
   formatearPrecio(precio: number): string {
     return precio.toLocaleString('es-PY') + ' Gs.';
