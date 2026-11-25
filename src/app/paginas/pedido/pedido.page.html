@@ -1,9 +1,68 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title> Pedido </ion-title>
+    <ion-title>Pedido</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <p>Aqui mostraremos el pedido.</p>
+<ion-content>
+  @if (pedidoServicio.items().length === 0) {
+    <div class="estado-vacio">
+      <ion-icon name="cart-outline" class="icono-vacio"></ion-icon>
+      <p>Tu pedido está vacío. Agrega productos desde el Menú.</p>
+    </div>
+  }
+  @else {
+    <ion-list>
+      @for (item of pedidoServicio.items(); track item.producto.id) {
+        <ion-item>
+          <ion-label>
+            <h2>{{ item.producto.nombre }}</h2>
+            <p>{{ formatearPrecio(item.producto.precio) }} c/u</p>
+            <p>Subtotal: {{ formatearPrecio(item.producto.precio * item.cantidad) }}</p>
+          </ion-label>
+          <ion-button
+            slot="end"
+            fill="outline"
+            size="small"
+            (click)="pedidoServicio.disminuirCantidad(item.producto.id)"
+          >
+            <ion-icon slot="icon-only" name="remove"></ion-icon>
+          </ion-button>
+          <ion-badge slot="end" color="primary">{{ item.cantidad }}</ion-badge>
+          <ion-button
+            slot="end"
+            fill="outline"
+            size="small"
+            (click)="pedidoServicio.aumentarCantidad(item.producto.id)"
+          >
+            <ion-icon slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+        </ion-item>
+      }
+    </ion-list>
+  }
 </ion-content>
+@if (pedidoServicio.items().length > 0) {
+  <ion-footer>
+    <ion-toolbar>
+      <div class="pie-pedido">
+        <span class="total">Total: {{ formatearPrecio(pedidoServicio.totalPagar()) }}</span>
+        <ion-button (click)="mostrarConfirmacion.set(true)">Confirmar pedido</ion-button>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
+}
+<ion-alert
+  [isOpen]="mostrarConfirmacion()"
+  header="Confirmar pedido"
+  [message]="textoConfirmacion()"
+  [buttons]="botonesConfirmacion"
+  (didDismiss)="mostrarConfirmacion.set(false)"
+></ion-alert>
+<ion-alert
+  [isOpen]="mostrarExito()"
+  header="¡Pedido confirmado!"
+  message="Gracias por tu compra. Tu pedido está en preparación."
+  [buttons]="botonesExito"
+  (didDismiss)="mostrarExito.set(false)"
+></ion-alert>
