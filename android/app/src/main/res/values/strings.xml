@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Menu Restaurante</string>
+    <string name="title_activity_main">Menu Restaurante</string>
+    <string name="package_name">py.edu.menurestaurante</string>
+    <string name="custom_url_scheme">py.edu.menurestaurante</string>
+</resources>
