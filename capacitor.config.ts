@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'menu-restaurante',
+  appId: 'py.edu.menurestaurante',
+  appName: 'Menu Restaurante',
   webDir: 'www'
 };
 
